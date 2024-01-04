@@ -1,0 +1,25 @@
+{% load static %} 
+<header id="main-navigation"> 
+<h1><a href="{% url "index" %}">Welcome {{user.username}}!</a></h1>
+<div class = "events-dropdown">
+    <p class = "events-dropbtn">Events</p>
+    <div class = "events-dropdown-content">
+        <a href="{% url "posts-page" %}">Go to Events</a>
+        <a href="{% url "new-post-page" %}">Create new Event</a> 
+    </div>
+</div>
+{% if user.is_authenticated %}
+    <div class = 'account-dropdown'>
+        <p class = 'account-dropbtn'>Account</p>
+        <div class = 'account-dropdown-content'>
+            <a href = "{%url "profile" %}">Edit Profile</a>
+            <a href = "{%url "update_password" %}">Update Password</a>
+            <a href = "{%url "logout" %}">Logout</a>
+        </div>
+    </div>
+{% else %}
+    <a href="{% url "login" %}">Login</a> 
+{% endif %}
+<link rel="stylesheet" href="{% static "blog/includes/header.css" %}"> 
+
+</header>

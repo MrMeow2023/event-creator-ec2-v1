@@ -1,0 +1,30 @@
+{% extends "base.html" %} <!-- This base.html includes 3 portions: page_title, css_files, and body_contents.-->
+{% load static %}
+
+{% block page_title %} 
+    {{posts.title|title}} 
+{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "blog/posts.css" %}">
+{% endblock %}
+
+{% block body_contents %} 
+    {% include "./includes/header.html" %}  
+    <section class="blog-content"> 
+        <h1>{{posts.title|title}}</h1>
+        <img src="{{posts.image.url }}" alt=""> 
+        <p>
+            {{posts.content}}
+        </p>
+        <p id="blog-author-section">
+            <b>Post Author</b> <br>
+            <img src="{{author_profile.avatar.url}}"><br>
+            {{posts.author}}
+        </p>
+        <footer>
+            <p>Created on: {{posts.created_on}}</p>
+            <p>Last Modified on: {{posts.last_modified}}</p>
+        </footer>
+    </section>
+{% endblock %} 

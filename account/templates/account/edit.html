@@ -1,0 +1,52 @@
+{% extends "base.html" %} <!-- This base.html includes 3 portions: page_title, css_files, and body_contents.-->
+{% load static %}
+
+{% block page_title %} 
+    Edit Account
+{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "account/account.css" %}">
+{% endblock %}
+
+{% block body_contents %} 
+    {% include "blog/includes/header.html" %} 
+
+    <section class="update-account-form">
+        <h2>Update your account</h2>
+        <form method="post" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+            <table id="update-user">
+                <tr>
+                    <th>Username: </th>
+                    <td>{{user.username}}</td>
+                </tr>
+                <tr>
+                    <th>Current Avatar</th>
+                    <td><img src="{{avatar.url}}"></td>
+                </tr>
+                {% for items in edit_profile_form %}
+                    <tr>
+                        <th>{{items.label}}</th>
+                        <td>{{items}}</td> 
+                        <td> 
+                        {% for error in items.errors %}
+                            {{error}}</br>
+                        {% endfor %}   
+                        </td>
+                    </tr>
+                {% endfor %} 
+            <tr>
+            <td><button type="submit" value="Update">Update</button></td>
+            </tr>
+            </table>
+        </form>
+    </section>
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <p{% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </p>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %} 

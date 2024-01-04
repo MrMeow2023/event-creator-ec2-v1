@@ -1,0 +1,41 @@
+{% extends "base.html" %} <!-- This base.html includes 3 portions: page_title, css_files, and body_contents.-->
+{% load static %}
+
+{% block page_title %} All Event Posts {% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "blog/posts.css" %}">
+{% endblock %}
+{% block body_contents %}  
+    {% include "./includes/header.html" %}  
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <p{% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <section id="latest-posts">
+        <h2> Latests Events </h2>
+        <ul>
+            {% for post in posts %}
+            <li>
+                <article class="post">
+                    <a href="{% url "post-detail-page" post.slug %}">
+                        <img src="{{post.image.url}}" alt="Japan trip">
+                        <div class="post__content">
+                            <h3>{{post.title}}</h3>
+                            <p>{{post.content}}</p>
+                        </div>
+                    </a>
+                </article>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section id="about">
+        <h2>About this site</h2>
+        <p>Create your own events!</p> 
+    </section>
+{% endblock %}
