@@ -17,23 +17,17 @@
     {% endif %}
     <section id="latest-posts">
         <h2> Latests Events </h2>
-        <ul>
-            {% for post in posts %}
-            <li>
-                <article class="post">
-                    <a href="{% url "post-detail-page" post.slug %}">
-                        <img src="{{post.image.url}}" alt="Japan trip">
-                        <div class="post__content">
-                            <h3>{{post.title}}</h3>
-                            <p>{{post.content}}</p>
-                        </div>
-                    </a>
-                </article>
-            </li>
+        <ul class="post-list">
+            {% for post in posts %} 
+            <li class="latest-post-items"> 
+                <a href="{% url "post-detail-page" post.slug %}">
+                    <img src="{{post.image.url}}" alt="Japan trip"> 
+                    <h4>{{post.title}}</h4>  
+                </a> 
+            </li> 
             {% endfor %}
         </ul>
     </section>
-
     <section id="about">
         <h2>About this site</h2>
         <p>Create your own events!</p> 

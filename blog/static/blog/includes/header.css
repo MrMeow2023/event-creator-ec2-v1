@@ -42,6 +42,7 @@ header a:hover {
   /* Dropdown Content (Hidden by Default) */
   .account-dropdown-content ,
   .events-dropdown-content {
+    z-index: 999;
     display: none;
     position: absolute;
     background-color: #f1f1f1;

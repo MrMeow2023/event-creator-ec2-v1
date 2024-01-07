@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Post 
+from .models import Post, Comment
 
 class PostForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -30,3 +30,12 @@ class PostForm(ModelForm):
             'title':  forms.TextInput(attrs={'placeholder': 'Name'}), #Use Textinput class of forms
             'content':  forms.Textarea(attrs={'placeholder': 'Enter description here'}), 
         }
+
+class PostComment(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)  
+        
+    class Meta:
+        model = Comment
+        fields = '__all__'
+        exclude = ['commenter', 'post']
