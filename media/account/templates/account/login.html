@@ -1,0 +1,43 @@
+{% extends "base.html" %} <!-- This base.html includes 3 portions: page_title, css_files, and body_contents.-->
+{% load static %}
+
+{% block page_title %} 
+    Create New Account
+{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static "account/account.css" %}">
+{% endblock %}
+
+{% block body_contents %} 
+    {% include "blog/includes/header.html" %} 
+    {% if User.is_authenticated %}
+    <h2>Already logged in </h2>
+    {% else %}
+        <section class="login-form">
+            <h2>Login</h2> 
+            <form method="post" action="{% url 'login' %}?next={{next_url}}"> 
+            {% csrf_token %}
+            <table id="login-user">
+                {% for items in login_user_form %}
+                    <tr>
+                        <th>{{items.label}}</th>
+                        <td>{{items}}</td> 
+                    </tr>
+                {% endfor %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}"/>  
+            <tr><td><button type="submit" value="Login">Login</button></td></tr>
+            </table>
+            </form>
+            <p>No account? <a href = "{% url 'register' %}">Register</a></p>
+            <p>{{login_user_form.non_field_errors  }}</p>
+        </section>
+    {% endif %}
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <p{% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </p>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %} 
