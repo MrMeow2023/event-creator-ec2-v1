@@ -1,4 +1,5 @@
 #center {
+  position: relative;
   width: 50%; 
   margin: 8rem auto 2rem auto;
   margin-top: 5rem;
@@ -13,8 +14,6 @@
 
 ul {
   list-style: none;
-  display: inline-block; 
-  max-width: 100%;
   padding: 0.5rem; 
   margin: auto;
 } 
@@ -33,41 +32,13 @@ a {
 }
 
 a:hover {
-  color: purple;
-  font-weight: bold; 
+  color: rgb(104, 104, 104);
+  font-weight: bold;
 }
 
 .blog_content {
   color:rgb(90, 138, 241);
   text-align: center;
-}
-
-#welcome {
-    background: #1b6f75;
-    padding: 6rem 12%;
-}
-  
-#welcome header {
-    display: flex;
-    align-items: flex-start;
-    margin: 3rem auto;
-}
-  
-#welcome img {
-    width: 10rem;
-    height: 10rem;
-    object-fit: cover;
-    object-position: top;
-    border: 5px solid white;
-    border-radius: 12px;
-    background-color: #ffe1bf;
-    transform: rotateZ(-5deg);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-  
-#welcome p {
-  color: white;
-  font-size: 1.5rem;
 }
 
 #latest-posts {
@@ -82,7 +53,7 @@ a:hover {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;  
-  border-radius: 12px;
+  border-radius: 12px; 
   /*
   padding: 2rem;
   margin: 5rem auto;
@@ -91,24 +62,27 @@ a:hover {
 }
 
 .latest-post-items { 
-  padding: 1px;
-  margin: 4px; 
+  padding: 2px;
+  margin: 2px; 
   color: white;
-  width: 22rem;
-  height: 22rem;
+  flex-basis: 24%;
   border-style: solid;
   border-color: black;
 }
 
-.latest-post-items:hover{
-  box-shadow: black;
+.latest-post-items a:hover img {
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(87, 244, 250);
 }
 
-
-.post-list img {
+.latest-post-items img {
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.0);
+  border-width: 2px; 
   object-fit: cover;
-  height: 90%;
-  width: 90%;
+  width: 100%;
+  aspect-ratio: 1/1;
   border-radius: 12px;
 }
 
@@ -182,4 +156,34 @@ footer {
   width: 100%; 
   color: rgb(0, 19, 129);
   border-radius: .2rem;
+}
+
+.post-attend-section {
+  position:absolute;
+  top:1rem;
+  right:1rem;
+}
+
+.like_button {
+  background: transparent;
+  border: none;
+  float: right;
+}
+
+#like_button_post {
+  float: left
+}
+
+.like_button img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.like_button:hover {
+  position: relative;
+  bottom: 2px;
+}
+
+.like_button:active {
+  opacity: 0.7;
 }

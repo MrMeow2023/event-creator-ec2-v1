@@ -23,6 +23,8 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to = image_url)
     slug = models.SlugField(default="", unique=True)
+    attending = models.ManyToManyField(User, default=None, related_name="attend_event")
+    likes = models.ManyToManyField(User, default=None, related_name="post_likes")
 
     def __str__(self):
         return f"{self.title}"
@@ -33,6 +35,8 @@ class Comment(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User, default=None, related_name="comment_likes")
 
     def __str__(self):
         return '%s - %s' % (self.post.title, self.title)
+     

@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from django.http import HttpResponse 
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post, Comment
 from account.models import UserProfile
-from .forms import PostForm, PostComment
+from .forms import PostForm, PostComment 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib import messages
@@ -19,11 +19,6 @@ def index(request):
 
  
 def blog_post(request, slug):
-    #post_content = {}
-    #for post in blog_posts:
-    #    if post['slug']==slug:
-    #        post_content=post
-    #post_content = next(post for post in blog_posts if post['slug']== slug).json()
     current_post = Post.objects.get(slug=slug)
     try:
         comments = Comment.objects.filter(post=current_post)  
@@ -32,20 +27,52 @@ def blog_post(request, slug):
         comments = 'none'
     author_profile = UserProfile.objects.get(user=current_post.author)
 
-    if request.method == "POST":
+    if request.method == "POST" and "submit_comment" in request.POST:
         create_comment_form = PostComment(request.POST)
         if create_comment_form.is_valid():
             instance = create_comment_form.save(commit=False)
             instance.commenter=request.user
             instance.post=current_post
             instance.save() 
-            messages.success(request, "Your commment is created!")  
-    create_comment_form = PostComment()
+            messages.success(request, "Your commment is created!")
+            return HttpResponseRedirect(reverse("post-detail-page", kwargs={'slug':slug}))
+    #Attend and unattend button
+    if request.method == "POST" and "attend_button" in request.POST:
+        current_post.attending.add(request.user)
+        messages.success(request, "You are attending the event!")
+        return HttpResponseRedirect(reverse("post-detail-page", kwargs={'slug':slug}))
+    if request.method == "POST" and "unattend_button" in request.POST:
+        current_post.attending.remove(request.user)
+        messages.success(request, "You have removed yourself from the event!")
+        return HttpResponseRedirect(reverse("post-detail-page", kwargs={'slug':slug}))
+    create_comment_form = PostComment() 
+    #Like/Unlike post button
+    if request.method == "POST" and "like_post" in request.POST:
+        if request.user.is_authenticated:
+            if request.user in current_post.likes.all():
+                current_post.likes.remove(request.user)
+            else:
+                current_post.likes.add(request.user)
+        else:
+            messages.info(request, "You need to login to like post")
+        return HttpResponseRedirect(reverse("post-detail-page", kwargs={'slug':slug}))
+    #Like/Unlike comment button
+    if request.method == "POST" and "like_comment" in request.POST:
+        comment_id = request.POST.get("like_comment")
+        current_comment = current_post.comment_set.get(id=comment_id)
+        if request.user.is_authenticated:
+            if request.user in current_comment.likes.all():
+                current_comment.likes.remove(request.user)
+            else:
+                current_comment.likes.add(request.user) 
+        else:
+            messages.info(request, "You need to login to like comments")
+        return HttpResponseRedirect(reverse("post-detail-page", kwargs={'slug':slug}))
     return render(request, 'blog/posts.html', {
         "posts": current_post,
         "author_profile": author_profile,
         "comments": comments,
-        "create_comment_form": create_comment_form
+        "create_comment_form": create_comment_form, 
     })
 
  

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Post, Comment
+from .models import Post, Comment 
 
 class PostForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -9,7 +9,7 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         fields = '__all__'
-        exclude = ['author']
+        exclude = ['author', 'attending', 'likes']
         field_classes = {
             "created_on": model.created_on,
             "last_modified": model.last_modified,
@@ -38,4 +38,5 @@ class PostComment(ModelForm):
     class Meta:
         model = Comment
         fields = '__all__'
-        exclude = ['commenter', 'post']
+        exclude = ['commenter', 'post', 'likes']
+ 

@@ -2,10 +2,13 @@
 
 html {
     font-family: 'Raleway', sans-serif; 
-    background-color: rgb(127, 216, 223);
+    background-color: rgb(145, 181, 221);
 }
 
 body {
     margin: 0;
 }
  
+pre, p {
+    font-family: 'Raleway', sans-serif; 
+}

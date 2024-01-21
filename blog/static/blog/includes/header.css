@@ -18,7 +18,8 @@ header a:hover {
     justify-content: space-between;
     align-items: center;
     padding: 0 10%;
-    position: absolute;
+    position: fixed;
+    z-index: 999;
     top: 0;
     left: 0;
     background: #240250;
