@@ -187,3 +187,14 @@ footer {
 .like_button:active {
   opacity: 0.7;
 }
+
+#edit_post_button {
+  width: 2rem;
+  height: 2rem; 
+  opacity: 0.5;
+}
+
+#edit_post_button:hover {
+  opacity: 1;
+  transition-duration: 500ms;
+}

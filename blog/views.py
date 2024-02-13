@@ -68,6 +68,7 @@ def blog_post(request, slug):
         else:
             messages.info(request, "You need to login to like comments")
         return HttpResponseRedirect(reverse("post-detail-page", kwargs={'slug':slug}))
+    print(author_profile)
     return render(request, 'blog/posts.html', {
         "posts": current_post,
         "author_profile": author_profile,
@@ -95,3 +96,21 @@ def new_post(request):
    else:
         create_post_form = PostForm() 
    return render(request, 'blog/create_post.html', {"create_post_form": create_post_form})
+
+@login_required(login_url=reverse_lazy('login'))
+def edit_post(request, id):
+    current_post = Post.objects.get(id=id)
+    if request.user != current_post.author:
+        messages.info(request, "Your cannot edit post as you are not the author!")
+        return redirect(reverse('posts-page'))
+    if request.method == "POST":
+       edit_post_form = PostForm(request.POST, request.FILES, instance=current_post)
+       if edit_post_form.is_valid():
+           instance = edit_post_form.save(commit=False)
+           instance.author=request.user
+           instance.save() 
+           messages.success(request, "Your Post is edited!")
+           return redirect(reverse('posts-page'))
+    else:
+        edit_post_form = PostForm(instance=current_post) 
+    return render(request, 'blog/edit_post.html', {"edit_post_form": edit_post_form})

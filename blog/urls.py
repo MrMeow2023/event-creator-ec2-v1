@@ -5,5 +5,6 @@ urlpatterns = [
     path("", views.index, name='index'),
     path("events", views.start, name='posts-page'),
     path("events/<slug:slug>", views.blog_post, name="post-detail-page"),
-    path("create_post", views.new_post, name="new-post-page")
+    path("create_post", views.new_post, name="new-post-page"),
+    path("edit_post/<int:id>", views.edit_post, name="edit-post-page")
 ]

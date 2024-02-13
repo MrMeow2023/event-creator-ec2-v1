@@ -36,7 +36,13 @@
             <p>Login to attend</p>
         {% endif %}
         </div>
-        <h1>{{posts.title|title}}</h1>
+        <h1>{{posts.title|title}} 
+        {% if user.is_authenticated and user == posts.author %} 
+            <a href="{% url 'edit-post-page' posts.id %}">
+                <img id="edit_post_button" src={% static "edit_icon.svg" %} style="vertical-align:bottom">
+            </a> 
+        {% endif %}
+        </h1>   
         <img src="{{posts.image.url }}" alt=""> 
         <p>
             <pre>{{posts.content}}</pre>
