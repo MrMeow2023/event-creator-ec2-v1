@@ -65,7 +65,7 @@ a:hover {
   padding: 2px;
   margin: 2px; 
   color: white;
-  flex-basis: 24%;
+  flex-basis: 100%;
   border-style: solid;
   border-color: black;
 }
